@@ -9,12 +9,14 @@ type RGBColor struct {
 }
 
 func RGB(red int, green int, blue int) Color {
-	return Color{
-		RGB: RGBColor{
+	rgb := RGBColor{
 			Red:   red,
 			Green: green,
 			Blue:  blue,
-		},
+	}
+	return Color{
+		RGB: rgb,
+		Hex: rgb.ToHexColor(),
 	}
 }
 
