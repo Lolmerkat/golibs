@@ -1,0 +1,21 @@
+name: On Tag Push
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  send_webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get tag name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
+      - name: Send curl request
+        run: curl https://sum.golang.org/lookup/github.com/lolmerkat/golibs@${{env.TAG_NAME}}
